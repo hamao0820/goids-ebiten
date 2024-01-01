@@ -4,15 +4,18 @@ import (
 	"image"
 	"image/draw"
 	_ "image/png"
+	"math/rand"
 	"os"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hamao0820/goids-ebiten/vector"
 	xdraw "golang.org/x/image/draw"
 )
 
 const (
-	Width  = 640
-	Height = 480
+	Width    = 640
+	Height   = 480
+	goidsNum = 100
 )
 
 var (
@@ -49,18 +52,34 @@ func resizeByHeight(img image.Image, height float64) image.Image {
 }
 
 type Game struct {
+	goids []Goid
 }
 
 func NewGame() *Game {
-	return &Game{}
+	goids := make([]Goid, 0, goidsNum)
+	for i := 0; i < goidsNum; i++ {
+		goids = append(goids, NewGoid(vector.CreateVector(float64(rand.Intn(Width)), float64(rand.Intn(Height))), 4, 0.1, 100))
+	}
+	return &Game{goids: goids}
 }
 
 func (g *Game) Update() error {
+	mouse := vector.CreateVector(0, 0)
+	for i := 0; i < len(g.goids); i++ {
+		goid := &g.goids[i]
+		goid.Flock(g.goids, mouse)
+		goid.Update(Width, Height)
+	}
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	screen.DrawImage(gopher, nil)
+	for _, goid := range g.goids {
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Translate(-float64(GopherSize)/2, -float64(GopherSize)/2)
+		op.GeoM.Translate(goid.position.X, goid.position.Y)
+		screen.DrawImage(gopher, op)
+	}
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
