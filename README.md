@@ -5,7 +5,3 @@
 ```sh
 $ go run ./main.go
 ```
-
-## demo
-
-![demo](goids-ebiten.gif)
