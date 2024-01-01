@@ -9,7 +9,9 @@ func main() {
 	g := goids.NewGame()
 	ebiten.SetWindowSize(goids.Width, goids.Height)
 	ebiten.SetWindowTitle("Goids")
-	if err := ebiten.RunGame(g); err != nil {
+	op := &ebiten.RunGameOptions{}
+	op.ScreenTransparent = true
+	if err := ebiten.RunGameWithOptions(g, op); err != nil {
 		panic(err)
 	}
 }
