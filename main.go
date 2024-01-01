@@ -11,7 +11,6 @@ func main() {
 	ebiten.SetWindowTitle("Goids")
 	ebiten.SetWindowFloating(true)
 	ebiten.SetWindowDecorated(false)
-	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 	ebiten.SetWindowMousePassthrough(true)
 	op := &ebiten.RunGameOptions{}
 	op.ScreenTransparent = true
