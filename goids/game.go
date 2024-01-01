@@ -3,6 +3,7 @@ package goids
 import (
 	"math/rand"
 
+	"github.com/fstanis/screenresolution"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hamao0820/goids-ebiten/gopher"
 	"github.com/hamao0820/goids-ebiten/vector"
@@ -10,9 +11,22 @@ import (
 
 const (
 	goidsNum = 20
-	Width    = 640
-	Height   = 480
 )
+
+var (
+	Width  = 640
+	Height = 480
+)
+
+func init() {
+	res := screenresolution.GetPrimary()
+	if res.Width == 0 || res.Height == 0 {
+		return
+	}
+
+	Width = res.Width
+	Height = res.Height
+}
 
 type Game struct {
 	goids []Goid
