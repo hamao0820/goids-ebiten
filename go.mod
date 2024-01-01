@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/ebitengine/oto/v3 v3.1.0 // indirect
 	github.com/ebitengine/purego v0.5.0 // indirect
+	github.com/fstanis/screenresolution v0.0.0-20190527020317-869904d15333 // indirect
 	github.com/go-text/typesetting v0.0.0-20230905121921-abdbcca6e0eb // indirect
 	github.com/hajimehoshi/bitmapfont/v3 v3.0.0 // indirect
 	github.com/hajimehoshi/ebiten/v2 v2.6.3 // indirect
@@ -13,6 +14,7 @@ require (
 	github.com/jezek/xgb v1.1.0 // indirect
 	github.com/jfreymuth/oggvorbis v1.0.5 // indirect
 	github.com/jfreymuth/vorbis v1.0.2 // indirect
+	github.com/lxn/win v0.0.0-20210218163916-a377121e959e // indirect
 	golang.org/x/exp/shiny v0.0.0-20230817173708-d852ddb80c63 // indirect
 	golang.org/x/image v0.12.0 // indirect
 	golang.org/x/mobile v0.0.0-20230922142353-e2f452493d57 // indirect
