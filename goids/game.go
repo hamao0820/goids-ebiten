@@ -7,20 +7,30 @@ import (
 	"math/rand"
 	"os"
 
+	"github.com/fstanis/screenresolution"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hamao0820/goids-ebiten/vector"
 	xdraw "golang.org/x/image/draw"
 )
 
 const (
-	Width    = 640
-	Height   = 480
 	goidsNum = 100
 )
 
 var (
 	gopher *ebiten.Image
+	Width  = 640
+	Height = 480
 )
+
+func init() {
+	res := screenresolution.GetPrimary()
+	if res.Width == 0 || res.Height == 0 {
+		return
+	}
+	Width = res.Width
+	Height = res.Height
+}
 
 func init() {
 	img, err := loadImage("assets/images/gopher.png")
@@ -68,7 +78,7 @@ func (g *Game) Update() error {
 	for i := 0; i < len(g.goids); i++ {
 		goid := &g.goids[i]
 		goid.Flock(g.goids, mouse)
-		goid.Update(Width, Height)
+		goid.Update(float64(Width), float64(Height))
 	}
 	return nil
 }
