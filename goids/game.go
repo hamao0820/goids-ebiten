@@ -1,8 +1,13 @@
 package goids
 
 import (
+	"image"
+	"image/draw"
+	_ "image/png"
+	"os"
+
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	xdraw "golang.org/x/image/draw"
 )
 
 const (
@@ -15,11 +20,32 @@ var (
 )
 
 func init() {
-	var err error
-	gopher, _, err = ebitenutil.NewImageFromFile("assets/images/gopher.png")
+	img, err := loadImage("assets/images/gopher.png")
 	if err != nil {
 		panic(err)
 	}
+	gopher = ebiten.NewImageFromImage(resizeByHeight(img, GopherSize))
+}
+
+func loadImage(path string) (image.Image, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	img, _, err := image.Decode(f)
+	if err != nil {
+		return nil, err
+	}
+
+	return img, nil
+}
+
+func resizeByHeight(img image.Image, height float64) image.Image {
+	imgDst := image.NewRGBA(image.Rect(0, 0, int(float64(img.Bounds().Dx())*height/float64(img.Bounds().Dy())), int(height))) // heightを基準にリサイズ
+	xdraw.CatmullRom.Scale(imgDst, imgDst.Bounds(), img, img.Bounds(), draw.Over, nil)
+	return imgDst.SubImage(imgDst.Rect)
 }
 
 type Game struct {
