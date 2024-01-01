@@ -1,16 +1,20 @@
 package gopher
 
 import (
+	"bytes"
+	"embed"
 	"image"
 	"image/draw"
 	_ "image/png"
-	"os"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	xdraw "golang.org/x/image/draw"
 )
 
 const size = 32
+
+//go:embed images/*
+var images embed.FS
 
 var (
 	Front *ebiten.Image
@@ -19,26 +23,24 @@ var (
 )
 
 func init() {
-	front, _ := loadImage("assets/images/gopher.png")
+	front, _ := loadImage("images/gopher.png")
 	Front = ebiten.NewImageFromImage(resizeByHeight(front))
-	side, _ := loadImage("assets/images/gopher-side.png")
+	side, _ := loadImage("images/gopher-side.png")
 	Side = ebiten.NewImageFromImage(resizeByHeight(side))
-	pink, _ := loadImage("assets/images/gopher-pink.png")
+	pink, _ := loadImage("images/gopher-pink.png")
 	Pink = ebiten.NewImageFromImage(resizeByHeight(pink))
 }
 
 func loadImage(path string) (image.Image, error) {
-	f, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
-	img, _, err := image.Decode(f)
+	b, err := images.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
 
+	img, _, err := image.Decode(bytes.NewReader(b))
+	if err != nil {
+		return nil, err
+	}
 	return img, nil
 }
 
