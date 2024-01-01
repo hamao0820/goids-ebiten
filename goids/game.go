@@ -1,55 +1,18 @@
 package goids
 
 import (
-	"image"
-	"image/draw"
-	_ "image/png"
 	"math/rand"
-	"os"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hamao0820/goids-ebiten/gopher"
 	"github.com/hamao0820/goids-ebiten/vector"
-	xdraw "golang.org/x/image/draw"
 )
 
 const (
-	goidsNum = 100
+	goidsNum = 20
 	Width    = 640
 	Height   = 480
 )
-
-var (
-	gopher *ebiten.Image
-)
-
-func init() {
-	img, err := loadImage("assets/images/gopher.png")
-	if err != nil {
-		panic(err)
-	}
-	gopher = ebiten.NewImageFromImage(resizeByHeight(img, GopherSize))
-}
-
-func loadImage(path string) (image.Image, error) {
-	f, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
-	img, _, err := image.Decode(f)
-	if err != nil {
-		return nil, err
-	}
-
-	return img, nil
-}
-
-func resizeByHeight(img image.Image, height float64) image.Image {
-	imgDst := image.NewRGBA(image.Rect(0, 0, int(float64(img.Bounds().Dx())*height/float64(img.Bounds().Dy())), int(height))) // heightを基準にリサイズ
-	xdraw.CatmullRom.Scale(imgDst, imgDst.Bounds(), img, img.Bounds(), draw.Over, nil)
-	return imgDst.SubImage(imgDst.Rect)
-}
 
 type Game struct {
 	goids []Goid
@@ -79,7 +42,14 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(-float64(GopherSize)/2, -float64(GopherSize)/2)
 		op.GeoM.Translate(goid.position.X, goid.position.Y)
-		screen.DrawImage(gopher, op)
+		switch goid.imageType {
+		case Front:
+			screen.DrawImage(gopher.Front, op)
+		case Side:
+			screen.DrawImage(gopher.Side, op)
+		case Pink:
+			screen.DrawImage(gopher.Pink, op)
+		}
 	}
 }
 
