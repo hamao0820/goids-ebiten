@@ -9,7 +9,6 @@ func main() {
 	g := goids.NewGame()
 	ebiten.SetWindowSize(goids.Width, goids.Height)
 	ebiten.SetWindowTitle("Goids")
-	ebiten.SetWindowDecorated(false)
 	if err := ebiten.RunGame(g); err != nil {
 		panic(err)
 	}
