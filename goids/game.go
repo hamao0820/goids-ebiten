@@ -74,7 +74,8 @@ func NewGame() *Game {
 }
 
 func (g *Game) Update() error {
-	mouse := vector.CreateVector(0, 0)
+	x, y := ebiten.CursorPosition()
+	mouse := vector.CreateVector(float64(x), float64(y))
 	for i := 0; i < len(g.goids); i++ {
 		goid := &g.goids[i]
 		goid.Flock(g.goids, mouse)
