@@ -1,6 +1,6 @@
 module github.com/hamao0820/goids-ebiten
 
-go 1.20
+go 1.21
 
 require (
 	github.com/fstanis/screenresolution v0.0.0-20190527020317-869904d15333
