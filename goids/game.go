@@ -3,7 +3,6 @@ package goids
 import (
 	"math/rand"
 
-	"github.com/fstanis/screenresolution"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hamao0820/goids-ebiten/gopher"
 	"github.com/hamao0820/goids-ebiten/vector"
@@ -14,18 +13,11 @@ const (
 )
 
 var (
-	Width  = 640
-	Height = 480
+	Width, Height int
 )
 
 func init() {
-	res := screenresolution.GetPrimary()
-	if res.Width == 0 || res.Height == 0 {
-		return
-	}
-
-	Width = res.Width
-	Height = res.Height
+	Width, Height = ebiten.ScreenSizeInFullscreen()
 }
 
 type Game struct {
