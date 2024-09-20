@@ -27,7 +27,7 @@ type Game struct {
 func NewGame() *Game {
 	goids := make([]Goid, 0, goidsNum)
 	for i := 0; i < goidsNum; i++ {
-		goids = append(goids, NewGoid(vector.CreateVector(float64(rand.Intn(Width)), float64(rand.Intn(Height))), 4, 0.1, 100))
+		goids = append(goids, NewGoid(vector.CreateVector(float64(rand.Intn(Width)), float64(rand.Intn(Height))), 2, 0.1, 100))
 	}
 	return &Game{goids: goids}
 }
