@@ -27,14 +27,14 @@ type Game struct {
 func NewGame() *Game {
 	goids := make([]Goid, 0, goidsNum)
 	for i := 0; i < goidsNum; i++ {
-		goids = append(goids, NewGoid(vector.CreateVector(float64(rand.Intn(Width)), float64(rand.Intn(Height))), 2, 0.1, 100))
+		goids = append(goids, NewGoid(vector.New(float64(rand.Intn(Width)), float64(rand.Intn(Height))), 2, 0.1, 100))
 	}
 	return &Game{goids: goids}
 }
 
 func (g *Game) Update() error {
 	x, y := ebiten.CursorPosition()
-	mouse := vector.CreateVector(float64(x), float64(y))
+	mouse := vector.New(float64(x), float64(y))
 	for i := 0; i < len(g.goids); i++ {
 		goid := &g.goids[i]
 		goid.Flock(g.goids, mouse)

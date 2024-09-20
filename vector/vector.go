@@ -7,7 +7,7 @@ type Vector struct {
 	Y float64
 }
 
-func CreateVector(x, y float64) Vector {
+func New(x, y float64) Vector {
 	return Vector{X: x, Y: y}
 }
 
