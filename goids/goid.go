@@ -1,7 +1,6 @@
 package goids
 
 import (
-	"math"
 	"math/rand"
 
 	"github.com/hamao0820/goids-ebiten/vector"
@@ -130,20 +129,15 @@ func (g *Goid) Flock(goids []Goid, mouse vector.Vector) {
 }
 
 func (g *Goid) AdjustEdge(width, height float64) {
-	if g.position.X < float64(GopherSize)/2 {
-		g.position.X = float64(GopherSize) / 2
-		g.velocity.X = math.Abs(g.velocity.X)
-	} else if g.position.X >= width-float64(GopherSize)/2 {
-		g.position.X = width - float64(GopherSize)/2 - 1
-		g.velocity.X = -math.Abs(g.velocity.X)
+	if g.position.X < -float64(GopherSize) {
+		g.position.X = width - float64(GopherSize)
+	} else if g.position.X >= width+float64(GopherSize) {
+		g.position.X = float64(GopherSize)
 	}
-
-	if g.position.Y < float64(GopherSize)/2 {
-		g.position.Y = float64(GopherSize) / 2
-		g.velocity.Y = math.Abs(g.velocity.Y)
-	} else if g.position.Y >= height-float64(GopherSize)/2 {
-		g.position.Y = height - float64(GopherSize)/2 - 1
-		g.velocity.Y = -math.Abs(g.velocity.Y)
+	if g.position.Y < -float64(GopherSize) {
+		g.position.Y = height - float64(GopherSize)
+	} else if g.position.Y >= height+float64(GopherSize) {
+		g.position.Y = float64(GopherSize)
 	}
 }
 
