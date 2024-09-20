@@ -130,14 +130,14 @@ func (g *Goid) Flock(goids []Goid, mouse vector.Vector) {
 
 func (g *Goid) AdjustEdge(width, height float64) {
 	if g.position.X < -float64(GopherSize) {
-		g.position.X = width - float64(GopherSize)
-	} else if g.position.X >= width+float64(GopherSize) {
-		g.position.X = float64(GopherSize)
+		g.position.X = width
+	} else if g.position.X > width+float64(GopherSize) {
+		g.position.X = -float64(GopherSize)
 	}
 	if g.position.Y < -float64(GopherSize) {
-		g.position.Y = height - float64(GopherSize)
-	} else if g.position.Y >= height+float64(GopherSize) {
-		g.position.Y = float64(GopherSize)
+		g.position.Y = height
+	} else if g.position.Y > height+float64(GopherSize) {
+		g.position.Y = -float64(GopherSize)
 	}
 }
 
