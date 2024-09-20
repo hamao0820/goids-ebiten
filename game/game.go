@@ -1,4 +1,4 @@
-package goids
+package game
 
 import (
 	"math/rand"
@@ -24,7 +24,7 @@ type Game struct {
 	goids []Goid
 }
 
-func NewGame() *Game {
+func New() *Game {
 	goids := make([]Goid, 0, goidsNum)
 	for i := 0; i < goidsNum; i++ {
 		goids = append(goids, NewGoid(vector.New(float64(rand.Intn(Width)), float64(rand.Intn(Height))), 2, 0.1, 100))
@@ -61,4 +61,16 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
 	return Width, Height
+}
+
+func (g *Game) Run() error {
+	ebiten.SetWindowSize(Width, Height)
+	ebiten.SetWindowTitle("Goids")
+	ebiten.SetWindowFloating(true)
+	ebiten.SetWindowDecorated(false)
+	ebiten.SetWindowMousePassthrough(true)
+	op := &ebiten.RunGameOptions{
+		ScreenTransparent: true,
+	}
+	return ebiten.RunGameWithOptions(g, op)
 }

@@ -1,4 +1,4 @@
-package goids
+package game
 
 import (
 	"math/rand"
