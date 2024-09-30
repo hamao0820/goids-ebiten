@@ -1,6 +1,7 @@
 package game
 
 import (
+	"math"
 	"math/rand"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -45,7 +46,12 @@ func (g *Game) Update() error {
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	for _, goid := range g.goids {
-		op := &ebiten.DrawImageOptions{}
+		theta := goid.velocity.Angle() + math.Pi/2
+		geom := ebiten.GeoM{}
+		geom.Rotate(theta)
+		op := &ebiten.DrawImageOptions{
+			GeoM: geom,
+		}
 		op.GeoM.Translate(-float64(GopherSize)/2, -float64(GopherSize)/2)
 		op.GeoM.Translate(goid.position.X, goid.position.Y)
 		switch goid.imageType {

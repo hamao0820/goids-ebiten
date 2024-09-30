@@ -43,6 +43,10 @@ func (v *Vector) Sub(v2 Vector) {
 	v.Y -= v2.Y
 }
 
+func (v *Vector) Angle() float64 {
+	return math.Atan2(v.Y, v.X)
+}
+
 func Sub(v2, v1 Vector) Vector {
 	return Vector{X: v2.X - v1.X, Y: v2.Y - v1.Y}
 }
